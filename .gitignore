@@ -6,6 +6,7 @@
 /data/taxi_data/*
 !/data/taxi_data/.gitkeep
 !/data/taxi_data/original_data/
+/data/taxi_data/original_data/*
 !/data/taxi_data/original_data/.gitkeep
 !/data/taxi_data/original_data/map_table/
 !/data/taxi_data/original_data/map_table/*
