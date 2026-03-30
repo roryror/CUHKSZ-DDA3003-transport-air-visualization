@@ -51,20 +51,26 @@ def handle_missing_values(input_dir: str):
                 print(f"  Warning: No value-related columns in file")
                 continue
             
-            # For each value-related column, fill missing values with file-wide average
+            # For each value-related column, fill missing values and 0 values (including 0.0) with file-wide average
             for col in value_columns:
-                # Calculate average
-                mean_value = df[col].mean()
-                
-                # Count missing values
-                missing_count = df[col].isnull().sum()
-                
-                if missing_count > 0:
-                    # Fill missing values
-                    df[col] = df[col].fillna(mean_value)
-                    print(f"  Filled column {col}: {missing_count} missing values, average: {mean_value:.4f}")
+                # Calculate average excluding 0 (including 0.0) and NaN values
+                non_zero_values = df[col][(df[col] != 0) & (df[col].notna())]
+                if len(non_zero_values) > 0:
+                    mean_value = non_zero_values.mean()
                 else:
-                    print(f"  Column {col}: No missing values")
+                    mean_value = 0  # Fallback if all values are 0 or NaN
+                
+                # Count missing values and 0 values (including 0.0)
+                missing_count = df[col].isnull().sum()
+                zero_count = (df[col] == 0).sum()
+                total_fill_count = missing_count + zero_count
+                
+                if total_fill_count > 0:
+                    # Fill missing values and 0 values (including 0.0)
+                    df[col] = df[col].apply(lambda x: mean_value if pd.isna(x) or x == 0 else x)
+                    print(f"  Filled column {col}: {missing_count} missing values, {zero_count} zero values (including 0.0), average: {mean_value:.4f}")
+                else:
+                    print(f"  Column {col}: No missing or zero values")
             
             # Save modified data (overwrite original file)
             df.to_csv(csv_file, index=False, encoding='utf-8')
