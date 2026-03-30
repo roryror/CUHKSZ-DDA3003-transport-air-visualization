@@ -8,6 +8,7 @@ import sys
 import subprocess
 from pathlib import Path
 from datetime import datetime, timedelta
+from concurrent.futures import ThreadPoolExecutor
 
 class DataPipeline:
     def __init__(self):
@@ -51,17 +52,31 @@ class DataPipeline:
         print("Starting taxi data processing")
         print("="*70)
         
-        # Call taxi data processing script
-        cmd = ["python3", "src/data_processing/taxi_handler/main.py", "--check-only"]
+        # Step 1: Convert Parquet files to CSV
+        parquet_cmd = ["python3", "src/data_processing/tool/Parquet2Csv.py", "--input-dir", str(self.taxi_original_dir)]
+        print(f"Executing command: {' '.join(parquet_cmd)}")
+        parquet_result = subprocess.run(parquet_cmd, capture_output=True, text=True)
         
-        print(f"Executing command: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, text=True)
-        
-        if result.returncode != 0:
-            print(f"Taxi data processing failed: {result.stderr}")
+        if parquet_result.returncode != 0:
+            print(f"Parquet to CSV conversion failed: {parquet_result.stderr}")
             return False
         
-        print("Taxi data processing successful")
+        # Step 2: Process taxi data
+        taxi_cmd = ["python3", "src/data_processing/taxi_handler/main.py", "--check-only"]
+        print(f"Executing command: {' '.join(taxi_cmd)}")
+        taxi_result = subprocess.run(taxi_cmd, capture_output=True, text=True)
+        
+        if taxi_result.returncode != 0:
+            print(f"Taxi data processing failed: {taxi_result.stderr}")
+            return False
+        
+        # Check if any files were actually processed
+        output = taxi_result.stdout
+        if "No CSV files starting with green or yellow found" in output or "All taxi data files have been cleaned" in output:
+            print("Taxi data processing: No new data to process")
+        else:
+            print("Taxi data processing successful")
+        
         return True
     
     def run(self, date_from: str, date_to: str):
@@ -71,13 +86,22 @@ class DataPipeline:
         print("Starting data processing pipeline")
         print(f"Time range: {date_from} to {date_to}")
         
-        # Step 1: Process air quality data
-        if not self.process_air_data(date_from, date_to):
+        # Run both processes in parallel
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            # Submit tasks
+            air_future = executor.submit(self.process_air_data, date_from, date_to)
+            taxi_future = executor.submit(self.process_taxi_data)
+            
+            # Get results
+            air_success = air_future.result()
+            taxi_success = taxi_future.result()
+        
+        # Check results
+        if not air_success:
             print("Pipeline failed: Air quality data processing failed")
             return False
         
-        # Step 2: Process taxi data
-        if not self.process_taxi_data():
+        if not taxi_success:
             print("Pipeline failed: Taxi data processing failed")
             return False
         
