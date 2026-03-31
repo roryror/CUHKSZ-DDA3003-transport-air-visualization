@@ -17,7 +17,7 @@ src/
     │   └── MissingValueHandler.py  # Missing value handling
     ├── taxi_handler/         # Taxi data processing
     │   ├── main.py           # Taxi data processing main entry
-    │   ├── TaxiDownloader.py # Taxi data downloader
+    │   ├── DataDownloader.py # Taxi data downloader
     │   └── DataCleaner.py    # Data cleaning
     ├── tool/                 # Utility classes
     │   └── __init__.py
@@ -54,7 +54,7 @@ data/
    - Unify time format to YYYYMMDDHHMMSS (e.g., 20260101002758)
 
 2. **Taxi Data Processing**
-   - Taxi data downloader (TaxiDownloader.py)
+   - Taxi data downloader (DataDownloader.py)
      - Download taxi data based on time range and taxi type
      - Smart month range calculation:
        - If days < 30: download 2 months (current and next month)
@@ -120,7 +120,7 @@ python3 src/data_processing/taxi_handler/main.py --clean
 
 ### Use Taxi Downloader Directly
 ```bash
-python3 src/data_processing/taxi_handler/TaxiDownloader.py --start-date YYYY-MM-DD --days DAYS --taxi-types yellow green
+python3 src/data_processing/taxi_handler/DataDownloader.py --start-date YYYY-MM-DD --days DAYS --taxi-types yellow green
 ```
 
 ## Data Format Description

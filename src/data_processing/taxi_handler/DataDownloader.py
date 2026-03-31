@@ -11,10 +11,10 @@ from typing import List, Dict, Optional
 import urllib.request
 
 
-class TaxiDownloader:
+class DataDownloader:
     def __init__(self, download_links_path: str, output_dir: str):
         """
-        Initialize TaxiDownloader
+        Initialize DataDownloader
         
         Parameters:
         -----------
@@ -216,7 +216,7 @@ def main():
     
     args = parser.parse_args()
     
-    downloader = TaxiDownloader(args.download_links, args.output_dir)
+    downloader = DataDownloader(args.download_links, args.output_dir)
     downloader.download(args.start_date, args.days, args.taxi_types)
 
 
