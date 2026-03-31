@@ -1,0 +1,4 @@
+# Data Processing Dependencies
+pandas
+pyarrow
+openaq

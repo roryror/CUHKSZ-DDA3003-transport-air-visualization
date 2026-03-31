@@ -14,6 +14,7 @@ class DataPipeline:
     def __init__(self):
         self.taxi_original_dir = Path("./data/taxi_data/original_data")
         self.taxi_output_dir = Path("./data/taxi_data")
+        self.download_links_path = Path("./data/taxi_data/original_data/download_link.json")
         
         # Ensure directories exist
         self.taxi_original_dir.mkdir(parents=True, exist_ok=True)
@@ -44,7 +45,7 @@ class DataPipeline:
         print("Air quality data processing successful")
         return True
     
-    def process_taxi_data(self):
+    def process_taxi_data(self, date_from: str, date_to: str, download: bool = False):
         """
         Check and process taxi data
         """
@@ -52,19 +53,25 @@ class DataPipeline:
         print("Starting taxi data processing")
         print("="*70)
         
-        # Step 1: Convert Parquet files to CSV
-        parquet_cmd = ["python3", "src/data_processing/tool/Parquet2Csv.py", "--input-dir", str(self.taxi_original_dir)]
-        print(f"Executing command: {' '.join(parquet_cmd)}")
-        parquet_result = subprocess.run(parquet_cmd, capture_output=True, text=True)
+        days = (datetime.strptime(date_to[:10], "%Y-%m-%d") - datetime.strptime(date_from[:10], "%Y-%m-%d")).days
         
-        if parquet_result.returncode != 0:
-            print(f"Parquet to CSV conversion failed: {parquet_result.stderr}")
-            return False
+        # Build taxi handler command
+        taxi_cmd = ["python3", "src/data_processing/taxi_handler/main.py"]
         
-        # Step 2: Process taxi data
-        taxi_cmd = ["python3", "src/data_processing/taxi_handler/main.py", "--check-only"]
+        if download:
+            taxi_cmd.extend([
+                "--download",
+                "--end-date", date_to[:10],
+                "--days", str(days),
+                "--taxi-types", "yellow", "green"
+            ])
+        
         print(f"Executing command: {' '.join(taxi_cmd)}")
         taxi_result = subprocess.run(taxi_cmd, capture_output=True, text=True)
+        
+        print(taxi_result.stdout)
+        if taxi_result.stderr:
+            print(taxi_result.stderr)
         
         if taxi_result.returncode != 0:
             print(f"Taxi data processing failed: {taxi_result.stderr}")
@@ -79,18 +86,19 @@ class DataPipeline:
         
         return True
     
-    def run(self, date_from: str, date_to: str):
+    def run(self, date_from: str, date_to: str, download_taxi: bool = False):
         """
         Run the complete pipeline
         """
         print("Starting data processing pipeline")
         print(f"Time range: {date_from} to {date_to}")
+        print(f"Download taxi data: {download_taxi}")
         
         # Run both processes in parallel
         with ThreadPoolExecutor(max_workers=2) as executor:
             # Submit tasks
             air_future = executor.submit(self.process_air_data, date_from, date_to)
-            taxi_future = executor.submit(self.process_taxi_data)
+            taxi_future = executor.submit(self.process_taxi_data, date_from, date_to, download_taxi)
             
             # Get results
             air_success = air_future.result()
@@ -116,6 +124,7 @@ def main():
     parser = argparse.ArgumentParser(description="Data Processing Pipeline")
     parser.add_argument("--end-date", type=str, help="End date, format: YYYY-MM-DD")
     parser.add_argument("--days", type=int, default=30, help="Number of days to look back")
+    parser.add_argument("--download-taxi", action="store_true", help="Download taxi data before processing")
     
     args = parser.parse_args()
     
@@ -133,10 +142,11 @@ def main():
     print(f"  End date: {end_date}")
     print(f"  Lookback days: {args.days}")
     print(f"  Start date: {start_date}")
+    print(f"  Download taxi data: {args.download_taxi}")
     
     # Run pipeline
     pipeline = DataPipeline()
-    pipeline.run(start_date, end_date)
+    pipeline.run(start_date, end_date, args.download_taxi)
 
 if __name__ == "__main__":
     main()

@@ -17,6 +17,7 @@ src/
     │   └── MissingValueHandler.py  # Missing value handling
     ├── taxi_handler/         # Taxi data processing
     │   ├── main.py           # Taxi data processing main entry
+    │   ├── TaxiDownloader.py # Taxi data downloader
     │   └── DataCleaner.py    # Data cleaning
     ├── tool/                 # Utility classes
     │   └── __init__.py
@@ -33,6 +34,7 @@ data/
 │       └── location_mapping.csv  # Station ID to location mapping
 └── taxi_data/                # Taxi data
     ├── original_data/        # Original data
+    │   ├── download_link.json # Download links for taxi data
     │   ├── map_table/        # Taxi zone ID to real location mapping
     │   │   └── *.csv
     │   ├── green_tripdata_*.csv  # Green taxi data
@@ -52,6 +54,12 @@ data/
    - Unify time format to YYYYMMDDHHMMSS (e.g., 20260101002758)
 
 2. **Taxi Data Processing**
+   - Taxi data downloader (TaxiDownloader.py)
+     - Download taxi data based on time range and taxi type
+     - Smart month range calculation:
+       - If days < 30: download 2 months (current and next month)
+       - If days >= 30: download 6 months
+     - Avoid duplicate downloads (skip existing files)
    - Convert Parquet format to CSV format
    - Clean data, keeping only key fields
    - Filter invalid data (trip distance > 0, passenger count > 0, etc.)
@@ -72,21 +80,35 @@ data/
 python3 src/data_processing/main.py
 
 # Specify end date and lookback days
-python3 src/data_processing/main.py --end-date 2026-03-30 --days 7
+python3 src/data_processing/main.py --end-date YYYY-MM-DD --days DAYS
+
+# Download and process taxi data
+python3 src/data_processing/main.py --download-taxi --end-date YYYY-MM-DD --days DAYS
 ```
 
 ### Run Air Quality Data Processing Separately
 ```bash
-python3 src/data_processing/air_handler/main.py --end-date 2026-03-30 --days 7
+python3 src/data_processing/air_handler/main.py --end-date YYYY-MM-DD --days DAYS
 ```
 
 ### Run Taxi Data Processing Separately
 ```bash
-# Check and process uncleaned files
-python3 src/data_processing/taxi_handler/main.py --check-only
+# Download taxi data first
+python3 src/data_processing/taxi_handler/main.py --download --end-date YYYY-MM-DD --days DAYS
+
+# Download specific taxi types
+python3 src/data_processing/taxi_handler/main.py --download --end-date YYYY-MM-DD --days DAYS --taxi-types yellow
+
+# Default: check and process only unprocessed files
+python3 src/data_processing/taxi_handler/main.py
 
 # Force reprocessing of all files
-python3 src/data_processing/taxi_handler/main.py --clean-only
+python3 src/data_processing/taxi_handler/main.py --clean
+```
+
+### Use Taxi Downloader Directly
+```bash
+python3 src/data_processing/taxi_handler/TaxiDownloader.py --start-date YYYY-MM-DD --days DAYS --taxi-types yellow green
 ```
 
 ## Data Format Description
@@ -111,8 +133,9 @@ python3 src/data_processing/taxi_handler/main.py --clean-only
 
 ## Notes
 - Air quality data is sourced from the OpenAQ API, which may be subject to API rate limits
-- Taxi data needs to be placed in the `data/taxi_data/original_data/` directory first
-- Taxi data can be obtained from: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+- Taxi data can be automatically downloaded using the `--download` or `--download-taxi` flags
+- Taxi data can also be manually obtained from: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+- Taxi data downloader will skip files that already exist to avoid duplicate downloads
 - Ensure necessary Python dependencies are installed before running
 
 ## Future Work
