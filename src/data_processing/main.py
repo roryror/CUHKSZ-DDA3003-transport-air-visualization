@@ -12,22 +12,12 @@ from concurrent.futures import ThreadPoolExecutor
 
 class DataPipeline:
     def __init__(self):
-        self.taxi_original_dir = Path("./data/taxi_data/original_data")
-        self.taxi_output_dir = Path("./data/taxi_data")
-        self.download_links_path = Path("./data/taxi_data/original_data/download_link.json")
-        
-        # Ensure directories exist
-        self.taxi_original_dir.mkdir(parents=True, exist_ok=True)
-        self.taxi_output_dir.mkdir(parents=True, exist_ok=True)
+        pass
     
-    def process_air_data(self, date_from: str, date_to: str):
+    def process_air_data(self, date_from: str, date_to: str, log_file: Path):
         """
         Process air quality data
         """
-        print("\n" + "="*70)
-        print("Starting air quality data processing")
-        print("="*70)
-        
         # Call air quality data processing pipeline
         cmd = [
             "python3", "src/data_processing/air_handler/main.py",
@@ -35,24 +25,19 @@ class DataPipeline:
             "--days", str((datetime.strptime(date_to[:10], "%Y-%m-%d") - datetime.strptime(date_from[:10], "%Y-%m-%d")).days)
         ]
         
-        print(f"Executing command: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         
-        if result.returncode != 0:
-            print(f"Air quality data processing failed: {result.stderr}")
-            return False
+        # Write output to log file
+        with open(log_file, 'w', encoding='utf-8') as f:
+            f.write(f"Executing command: {' '.join(cmd)}\n")
+            f.write(result.stdout)
         
-        print("Air quality data processing successful")
-        return True
+        return result.returncode == 0
     
-    def process_taxi_data(self, date_from: str, date_to: str, download: bool = False):
+    def process_taxi_data(self, date_from: str, date_to: str, download: bool = False, log_file: Path = None):
         """
         Check and process taxi data
         """
-        print("\n" + "="*70)
-        print("Starting taxi data processing")
-        print("="*70)
-        
         days = (datetime.strptime(date_to[:10], "%Y-%m-%d") - datetime.strptime(date_from[:10], "%Y-%m-%d")).days
         
         # Build taxi handler command
@@ -66,39 +51,38 @@ class DataPipeline:
                 "--taxi-types", "yellow", "green"
             ])
         
-        print(f"Executing command: {' '.join(taxi_cmd)}")
-        taxi_result = subprocess.run(taxi_cmd, capture_output=True, text=True)
+        taxi_result = subprocess.run(taxi_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         
-        print(taxi_result.stdout)
-        if taxi_result.stderr:
-            print(taxi_result.stderr)
+        # Write output to log file
+        if log_file:
+            with open(log_file, 'w', encoding='utf-8') as f:
+                f.write(f"Executing command: {' '.join(taxi_cmd)}\n")
+                f.write(taxi_result.stdout)
         
-        if taxi_result.returncode != 0:
-            print(f"Taxi data processing failed: {taxi_result.stderr}")
-            return False
-        
-        # Check if any files were actually processed
-        output = taxi_result.stdout
-        if "No CSV files starting with green or yellow found" in output or "All taxi data files have been cleaned" in output:
-            print("Taxi data processing: No new data to process")
-        else:
-            print("Taxi data processing successful")
-        
-        return True
+        return taxi_result.returncode == 0
     
     def run(self, date_from: str, date_to: str, download_taxi: bool = False):
         """
         Run the complete pipeline
         """
-        print("Starting data processing pipeline")
+        # Create log directory with timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        log_dir = Path(f"./logs/{timestamp}")
+        log_dir.mkdir(parents=True, exist_ok=True)
+        
+        print(f"Starting data processing pipeline")
         print(f"Time range: {date_from} to {date_to}")
         print(f"Download taxi data: {download_taxi}")
+        print(f"Logs will be saved to: {log_dir}")
+        
+        air_log_file = log_dir / "air_data.log"
+        taxi_log_file = log_dir / "taxi_data.log"
         
         # Run both processes in parallel
         with ThreadPoolExecutor(max_workers=2) as executor:
             # Submit tasks
-            air_future = executor.submit(self.process_air_data, date_from, date_to)
-            taxi_future = executor.submit(self.process_taxi_data, date_from, date_to, download_taxi)
+            air_future = executor.submit(self.process_air_data, date_from, date_to, air_log_file)
+            taxi_future = executor.submit(self.process_taxi_data, date_from, date_to, download_taxi, taxi_log_file)
             
             # Get results
             air_success = air_future.result()
@@ -106,15 +90,16 @@ class DataPipeline:
         
         # Check results
         if not air_success:
-            print("Pipeline failed: Air quality data processing failed")
+            print(f"Pipeline failed: Air quality data processing failed. See logs at {air_log_file}")
             return False
         
         if not taxi_success:
-            print("Pipeline failed: Taxi data processing failed")
+            print(f"Pipeline failed: Taxi data processing failed. See logs at {taxi_log_file}")
             return False
         
         print("\n" + "="*70)
         print("Data processing pipeline completed!")
+        print(f"Logs saved to: {log_dir}")
         print("="*70)
         return True
 

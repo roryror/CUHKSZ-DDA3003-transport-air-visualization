@@ -74,6 +74,18 @@ data/
 
 ## How to Run
 
+### Log Files
+Each run of the main pipeline generates a new log directory with timestamp:
+```
+logs/
+├── 20260331_143022/          # Timestamp format: YYYYMMDD_HHMMSS
+│   ├── air_data.log            # Air quality data processing logs
+│   └── taxi_data.log           # Taxi data processing logs
+└── ...
+```
+
+Logs are ignored by Git and won't be committed to the repository.
+
 ### Run the Main Pipeline
 ```bash
 # Basic usage

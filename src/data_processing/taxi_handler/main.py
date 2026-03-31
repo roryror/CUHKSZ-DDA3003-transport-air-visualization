@@ -375,6 +375,12 @@ def main():
     
     args = parser.parse_args()
     
+    # Ensure directories exist
+    input_dir = Path(args.input_dir)
+    output_dir = Path(args.output_dir)
+    input_dir.mkdir(parents=True, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
     if args.download:
         if args.end_date:
             end_date = datetime.strptime(args.end_date, "%Y-%m-%d")
