@@ -109,6 +109,39 @@ class TaxiDataPipeline:
         
         return True
     
+    def merge_data(self, start_date: datetime, end_date: datetime):
+        """
+        Merge taxi data files
+        
+        Parameters:
+        -----------
+        start_date : datetime
+            Start date of the time range
+        end_date : datetime
+            End date of the time range
+        """
+        print("\n" + "="*60)
+        print("Step 4: Merge taxi data")
+        print("="*60)
+        
+        cmd = [
+            "python3", "src/data_processing/taxi_handler/DataMerger.py",
+            "--input-dir", str(self.output_dir),
+            "--output-dir", str(self.output_dir),
+            "--start-date", start_date.strftime("%Y-%m-%d"),
+            "--end-date", end_date.strftime("%Y-%m-%d")
+        ]
+        
+        print(f"Executing command: {' '.join(cmd)}")
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        print(result.stdout)
+        
+        if result.returncode != 0:
+            print(f"Data merging failed with return code: {result.returncode}")
+            return False
+        
+        return True
+    
     def run(self, end_date: datetime = None, days: int = 30, 
             taxi_types: list = None, download: bool = False,
             convert_only: bool = False, clean_all: bool = False):
@@ -136,6 +169,8 @@ class TaxiDataPipeline:
         if taxi_types is None:
             taxi_types = ["yellow", "green"]
         
+        start_date = end_date - timedelta(days=days)
+        
         print("Starting taxi data processing pipeline")
         
         if download:
@@ -148,6 +183,10 @@ class TaxiDataPipeline:
         
         if not convert_only:
             if not self.clean_data(force_all=clean_all):
+                return False
+        
+        if not convert_only:
+            if not self.merge_data(start_date, end_date):
                 return False
         
         print("\n" + "="*60)
