@@ -8,7 +8,7 @@ from pathlib import Path
 from datetime import datetime
 import argparse
 
-def merge_taxi_data(input_dir: str, output_dir: str, start_date: datetime, end_date: datetime):
+def merge_taxi_data(input_dir: str, output_dir: str, start_date: datetime, end_date: datetime, task_timestamp: str = None):
     """
     Merge taxi data files into single files per taxi type
     
@@ -22,6 +22,8 @@ def merge_taxi_data(input_dir: str, output_dir: str, start_date: datetime, end_d
         Start date of the time range
     end_date : datetime
         End date of the time range
+    task_timestamp : str
+        Task timestamp to use for folder name (optional)
     """
     input_base = Path(input_dir)
     output_base = Path(output_dir)
@@ -29,7 +31,13 @@ def merge_taxi_data(input_dir: str, output_dir: str, start_date: datetime, end_d
     # Create merged directory name
     start_str = start_date.strftime("%Y%m%d")
     end_str = end_date.strftime("%Y%m%d")
-    current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    # Get operation time - use task timestamp if provided
+    if task_timestamp:
+        current_time = task_timestamp
+    else:
+        current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
     merged_dir = output_base / f"taxi_data_{start_str}_{end_str}_{current_time}"
     merged_dir.mkdir(parents=True, exist_ok=True)
     
@@ -124,13 +132,14 @@ def main():
     parser.add_argument("--output-dir", type=str, default="./data/taxi_data/", help="Output base directory")
     parser.add_argument("--start-date", type=str, required=True, help="Start date, format: YYYY-MM-DD")
     parser.add_argument("--end-date", type=str, required=True, help="End date, format: YYYY-MM-DD")
+    parser.add_argument("--task-timestamp", type=str, help="Task timestamp to use for folder name")
     
     args = parser.parse_args()
     
     start_date = datetime.strptime(args.start_date, "%Y-%m-%d")
     end_date = datetime.strptime(args.end_date, "%Y-%m-%d")
     
-    merge_taxi_data(args.input_dir, args.output_dir, start_date, end_date)
+    merge_taxi_data(args.input_dir, args.output_dir, start_date, end_date, args.task_timestamp)
 
 if __name__ == "__main__":
     main()

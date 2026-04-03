@@ -14,7 +14,7 @@ class DataPipeline:
     def __init__(self):
         pass
     
-    def process_air_data(self, date_from: str, date_to: str, log_file: Path):
+    def process_air_data(self, date_from: str, date_to: str, log_file: Path, task_timestamp: str):
         """
         Process air quality data with streaming logs
         """
@@ -22,12 +22,13 @@ class DataPipeline:
         cmd = [
             "python3", "src/data_processing/air_handler/main.py",
             "--end-date", date_to[:10],
-            "--days", str((datetime.strptime(date_to[:10], "%Y-%m-%d") - datetime.strptime(date_from[:10], "%Y-%m-%d")).days)
+            "--days", str((datetime.strptime(date_to[:10], "%Y-%m-%d") - datetime.strptime(date_from[:10], "%Y-%m-%d")).days),
+            "--task-timestamp", task_timestamp
         ]
         
         return self._run_command_with_streaming_logs(cmd, log_file)
     
-    def process_taxi_data(self, date_from: str, date_to: str, download: bool = False, log_file: Path = None):
+    def process_taxi_data(self, date_from: str, date_to: str, download: bool = False, log_file: Path = None, task_timestamp: str = ""):
         """
         Check and process taxi data with streaming logs
         """
@@ -41,8 +42,11 @@ class DataPipeline:
                 "--download",
                 "--end-date", date_to[:10],
                 "--days", str(days),
-                "--taxi-types", "yellow", "green"
+                "--taxi-types", "yellow", "green",
+                "--task-timestamp", task_timestamp
             ])
+        elif task_timestamp:
+            taxi_cmd.extend(["--task-timestamp", task_timestamp])
         
         return self._run_command_with_streaming_logs(taxi_cmd, log_file)
     
@@ -113,6 +117,7 @@ class DataPipeline:
         print(f"Starting data processing pipeline")
         print(f"Time range: {date_from} to {date_to}")
         print(f"Download taxi data: {download_taxi}")
+        print(f"Task timestamp: {timestamp}")
         print(f"Logs will be saved to: {log_dir}")
         
         air_log_file = log_dir / "air_data.log"
@@ -121,8 +126,8 @@ class DataPipeline:
         # Run both processes in parallel
         with ThreadPoolExecutor(max_workers=2) as executor:
             # Submit tasks
-            air_future = executor.submit(self.process_air_data, date_from, date_to, air_log_file)
-            taxi_future = executor.submit(self.process_taxi_data, date_from, date_to, download_taxi, taxi_log_file)
+            air_future = executor.submit(self.process_air_data, date_from, date_to, air_log_file, timestamp)
+            taxi_future = executor.submit(self.process_taxi_data, date_from, date_to, download_taxi, taxi_log_file, timestamp)
             
             # Get results
             air_success = air_future.result()

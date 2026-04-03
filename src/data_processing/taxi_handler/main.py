@@ -109,7 +109,7 @@ class TaxiDataPipeline:
         
         return True
     
-    def merge_data(self, start_date: datetime, end_date: datetime):
+    def merge_data(self, start_date: datetime, end_date: datetime, task_timestamp: str = None):
         """
         Merge taxi data files
         
@@ -119,6 +119,8 @@ class TaxiDataPipeline:
             Start date of the time range
         end_date : datetime
             End date of the time range
+        task_timestamp : str
+            Task timestamp to use for folder name (optional)
         """
         print("\n" + "="*60)
         print("Step 4: Merge taxi data")
@@ -132,6 +134,9 @@ class TaxiDataPipeline:
             "--end-date", end_date.strftime("%Y-%m-%d")
         ]
         
+        if task_timestamp:
+            cmd.extend(["--task-timestamp", task_timestamp])
+        
         print(f"Executing command: {' '.join(cmd)}")
         result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         print(result.stdout)
@@ -144,7 +149,8 @@ class TaxiDataPipeline:
     
     def run(self, end_date: datetime = None, days: int = 30, 
             taxi_types: list = None, download: bool = False,
-            convert_only: bool = False, clean_all: bool = False):
+            convert_only: bool = False, clean_all: bool = False,
+            task_timestamp: str = None):
         """
         Run the complete taxi data processing pipeline
         
@@ -162,6 +168,8 @@ class TaxiDataPipeline:
             Only convert Parquet files, do not clean data
         clean_all : bool
             Force clean all data (reprocess everything)
+        task_timestamp : str
+            Task timestamp to use for folder name (optional)
         """
         if end_date is None:
             end_date = datetime.now()
@@ -172,6 +180,8 @@ class TaxiDataPipeline:
         start_date = end_date - timedelta(days=days)
         
         print("Starting taxi data processing pipeline")
+        if task_timestamp:
+            print(f"Task timestamp: {task_timestamp}")
         
         if download:
             if not self.download_data(end_date, days, taxi_types):
@@ -186,7 +196,7 @@ class TaxiDataPipeline:
                 return False
         
         if not convert_only:
-            if not self.merge_data(start_date, end_date):
+            if not self.merge_data(start_date, end_date, task_timestamp):
                 return False
         
         print("\n" + "="*60)
@@ -207,6 +217,7 @@ def main():
     parser.add_argument("--taxi-types", type=str, nargs="+", default=["yellow", "green"], help="Taxi types to download (yellow, green)")
     parser.add_argument("--convert-only", action="store_true", help="Only convert Parquet files, do not clean data")
     parser.add_argument("--clean", action="store_true", help="Force clean all data (reprocess everything)")
+    parser.add_argument("--task-timestamp", type=str, help="Task timestamp to use for folder name")
     
     args = parser.parse_args()
     
@@ -229,7 +240,8 @@ def main():
         taxi_types=args.taxi_types,
         download=args.download,
         convert_only=args.convert_only,
-        clean_all=args.clean
+        clean_all=args.clean,
+        task_timestamp=args.task_timestamp
     )
 
 if __name__ == "__main__":

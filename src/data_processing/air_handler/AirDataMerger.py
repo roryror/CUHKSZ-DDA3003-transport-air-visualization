@@ -53,6 +53,9 @@ def merge_air_data(input_dir: str, output_dir: str, start_date: str, end_date: s
         print(f"No Parquet files found in {input_dir}")
         return None
     
+    # Sort files by name to ensure chronological order
+    parquet_files.sort(key=lambda x: x.name)
+    
     print(f"Found {len(parquet_files)} files")
     
     # Merge all files
@@ -66,10 +69,12 @@ def merge_air_data(input_dir: str, output_dir: str, start_date: str, end_date: s
     merged_df = pd.concat(all_dfs, ignore_index=True)
     
     # Sort by datetime if available
-    datetime_cols = ['datetime', 'date', 'time']
+    datetime_cols = ['datetime_hour', 'datetimeUtc', 'datetime', 'date', 'time']
     for col in datetime_cols:
         if col in merged_df.columns:
             print(f"  Sorting by {col}...")
+            # Convert to datetime type for proper sorting
+            merged_df[col] = pd.to_datetime(merged_df[col])
             merged_df = merged_df.sort_values(by=col)
             break
     

@@ -96,7 +96,7 @@ class AirDataDownloader:
         """
         return self.output_dir / f"openaq_data_{period_name}.parquet"
     
-    def download_period(self, start_date: datetime, end_date: datetime, period_name: str, bbox: tuple) -> Optional[Path]:
+    def download_period(self, start_date: datetime, end_date: datetime, period_name: str, bbox: tuple) -> tuple[Optional[Path], bool]:
         """
         Download data for a single 2-month period
         
@@ -113,15 +113,15 @@ class AirDataDownloader:
         
         Returns:
         --------
-        Optional[Path]
-            Path to downloaded file, or None if failed
+        tuple[Optional[Path], bool]
+            (Path to downloaded file, whether it was newly downloaded)
         """
         output_file = self.get_file_path(period_name)
         
         # Check if file already exists
         if output_file.exists():
             print(f"  File already exists, skipping: {output_file.name}")
-            return output_file
+            return output_file, False
         
         print(f"  Downloading data for {period_name}...")
         
@@ -147,12 +147,12 @@ class AirDataDownloader:
             # Move to our output directory
             temp_file.rename(output_file)
             print(f"  Successfully downloaded: {output_file.name}")
-            return output_file
+            return output_file, True
         else:
             print(f"  Download failed for {period_name}")
             if result.stderr:
                 print(f"  Error: {result.stderr}")
-            return None
+            return None, False
     
     def download(self, start_date_str: str, end_date_str: str, bbox: tuple) -> List[Path]:
         """
@@ -188,7 +188,7 @@ class AirDataDownloader:
         fail_count = 0
         
         for i, month_range in enumerate(month_ranges):
-            file_path = self.download_period(
+            file_path, was_downloaded = self.download_period(
                 month_range['start'],
                 month_range['end'],
                 month_range['period_name'],
@@ -201,8 +201,8 @@ class AirDataDownloader:
             else:
                 fail_count += 1
             
-            # Add delay between requests to avoid rate limiting
-            if i < len(month_ranges) - 1:
+            # Add delay between requests only if we actually downloaded a file
+            if i < len(month_ranges) - 1 and was_downloaded:
                 delay_time = 10  # 10 seconds delay
                 print(f"  Waiting {delay_time} seconds before next request...")
                 time.sleep(delay_time)

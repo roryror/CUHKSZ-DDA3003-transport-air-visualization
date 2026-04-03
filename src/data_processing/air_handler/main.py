@@ -91,7 +91,7 @@ class AirDataPipeline:
         print(f"Conversion successful: {csv_file}")
         return csv_file
     
-    def organize_data(self, csv_file: str) -> str:
+    def organize_data(self, csv_file: str, task_timestamp: str = None) -> str:
         """
         Organize data into structured directory
         """
@@ -101,6 +101,9 @@ class AirDataPipeline:
         
         # Call DataOrganizer.py to organize data
         cmd = ["python3", "src/data_processing/air_handler/DataOrganizer.py", "--input", csv_file]
+        
+        if task_timestamp:
+            cmd.extend(["--task-timestamp", task_timestamp])
         
         print(f"Executing command: {' '.join(cmd)}")
         result = subprocess.run(cmd, capture_output=True, text=True)
@@ -169,12 +172,14 @@ class AirDataPipeline:
         
         print("Cleanup completed")
     
-    def run(self, date_from: str, date_to: str):
+    def run(self, date_from: str, date_to: str, task_timestamp: str = None):
         """
         Run the complete pipeline
         """
         print("Starting air quality data processing pipeline")
         print(f"Time range: {date_from} to {date_to}")
+        if task_timestamp:
+            print(f"Task timestamp: {task_timestamp}")
         
         # Step 1: Fetch data
         parquet_file = self.fetch_data(date_from, date_to)
@@ -189,7 +194,7 @@ class AirDataPipeline:
             return False
         
         # Step 3: Organize data
-        organized_dir = self.organize_data(csv_file)
+        organized_dir = self.organize_data(csv_file, task_timestamp)
         if not organized_dir:
             print("Pipeline failed: Organization failed")
             return False
@@ -214,6 +219,7 @@ def main():
     parser = argparse.ArgumentParser(description="Air Quality Data Processing Pipeline")
     parser.add_argument("--end-date", type=str, help="End date, format: YYYY-MM-DD")
     parser.add_argument("--days", type=int, default=30, help="Number of days to look back")
+    parser.add_argument("--task-timestamp", type=str, help="Task timestamp to use for folder name")
     
     args = parser.parse_args()
     
@@ -231,10 +237,12 @@ def main():
     print(f"  End date: {end_date}")
     print(f"  Lookback days: {args.days}")
     print(f"  Start date: {start_date}")
+    if args.task_timestamp:
+        print(f"  Task timestamp: {args.task_timestamp}")
     
     # Run pipeline
     pipeline = AirDataPipeline()
-    pipeline.run(start_date, end_date)
+    pipeline.run(start_date, end_date, args.task_timestamp)
 
 if __name__ == "__main__":
     main()

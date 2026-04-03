@@ -10,7 +10,7 @@ from datetime import datetime
 import argparse
 import re
 
-def organize_data(input_file: str, output_base_dir: str = "./data/air_data"):
+def organize_data(input_file: str, output_base_dir: str = "./data/air_data", task_timestamp: str = None):
     """
     Organize data into structured directories
     
@@ -20,6 +20,8 @@ def organize_data(input_file: str, output_base_dir: str = "./data/air_data"):
         Input CSV file path
     output_base_dir : str
         Output base directory
+    task_timestamp : str
+        Task timestamp to use for folder name (optional)
     """
     # Ensure output directory exists
     output_base = Path(output_base_dir)
@@ -48,8 +50,11 @@ def organize_data(input_file: str, output_base_dir: str = "./data/air_data"):
         min_time_str = min_time.strftime('%Y%m%d')
         max_time_str = max_time.strftime('%Y%m%d')
         
-        # Get operation time
-        operation_time = datetime.now().strftime('%Y%m%d_%H%M%S')
+        # Get operation time - use task timestamp if provided
+        if task_timestamp:
+            operation_time = task_timestamp
+        else:
+            operation_time = datetime.now().strftime('%Y%m%d_%H%M%S')
         
         # Create main folder name
         folder_name = f"openaq_data_{min_time_str}_{max_time_str}_{operation_time}"
@@ -135,11 +140,12 @@ def main():
     parser.add_argument("--input", type=str, help="Input CSV file path")
     parser.add_argument("--input-dir", type=str, help="Input directory (batch processing)")
     parser.add_argument("--output", type=str, default="./data/air_data/", help="Output base directory")
+    parser.add_argument("--task-timestamp", type=str, help="Task timestamp to use for folder name")
     
     args = parser.parse_args()
     
     if args.input:
-        organize_data(args.input, args.output)
+        organize_data(args.input, args.output, args.task_timestamp)
     elif args.input_dir:
         batch_organize(args.input_dir, args.output)
     else:
