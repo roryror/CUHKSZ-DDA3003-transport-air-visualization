@@ -30,11 +30,11 @@ class AirDataPipeline:
         print("Step 1: Fetch data from OpenAQ API")
         print("="*60)
         
-        from AirDataDownloader import AirDataDownloader
-        from AirDataMerger import merge_air_data
+        from DataDownloader import DataDownloader
+        from DataMerger import merge_air_data
         
         # Step 1: Download monthly data
-        downloader = AirDataDownloader(
+        downloader = DataDownloader(
             api_key=self.api_key,
             output_dir="./data/air_data/original_data/"
         )

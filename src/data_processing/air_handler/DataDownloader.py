@@ -11,10 +11,10 @@ from typing import List, Dict, Optional
 import subprocess
 
 
-class AirDataDownloader:
+class DataDownloader:
     def __init__(self, api_key: str, output_dir: str = "./data/air_data/original_data/"):
         """
-        Initialize AirDataDownloader
+        Initialize DataDownloader
         
         Parameters:
         -----------
@@ -229,7 +229,7 @@ def main():
     
     args = parser.parse_args()
     
-    downloader = AirDataDownloader(args.api_key, args.output_dir)
+    downloader = DataDownloader(args.api_key, args.output_dir)
     downloader.download(args.start_date, args.end_date, tuple(args.bbox))
 
 
