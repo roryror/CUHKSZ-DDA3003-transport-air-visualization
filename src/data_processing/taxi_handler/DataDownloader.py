@@ -31,14 +31,14 @@ class DataDownloader:
         with open(self.download_links_path, 'r', encoding='utf-8') as f:
             self.download_links = json.load(f)
     
-    def calculate_month_range(self, start_date: datetime, days: int) -> List[str]:
+    def calculate_month_range(self, end_date: datetime, days: int) -> List[str]:
         """
-        Calculate the range of months to download based on start date and days
+        Calculate the range of months to download based on actual date range
         
         Parameters:
         -----------
-        start_date : datetime
-            Start date
+        end_date : datetime
+            End date
         days : int
             Number of days to look back
         
@@ -47,17 +47,13 @@ class DataDownloader:
         List[str]
             List of year-month strings in format "YYYY-MM"
         """
+        start_date = end_date - timedelta(days=days)
         months = []
-        
-        if days < 30:
-            num_months = 2
-        else:
-            num_months = 6
         
         current_date = start_date.replace(day=1)
         
-        # Find available months, going backwards if current month not available
-        while len(months) < num_months:
+        # Iterate through all months from start to end
+        while current_date <= end_date:
             year_str = str(current_date.year)
             month_str = f"{current_date.month:02d}"
             
@@ -65,17 +61,13 @@ class DataDownloader:
                 year_month = current_date.strftime("%Y-%m")
                 months.append(year_month)
             
-            # Move to previous month for next iteration
-            prev_month = current_date.month - 1
-            prev_year = current_date.year
-            if prev_month < 1:
-                prev_month = 12
-                prev_year -= 1
-            current_date = current_date.replace(year=prev_year, month=prev_month)
-            
-            # Check if we've gone too far back
-            if prev_year < 2016:
-                break
+            # Move to next month
+            next_month = current_date.month + 1
+            next_year = current_date.year
+            if next_month > 12:
+                next_month = 1
+                next_year += 1
+            current_date = current_date.replace(year=next_year, month=next_month)
         
         return months
     

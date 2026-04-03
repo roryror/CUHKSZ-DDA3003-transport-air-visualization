@@ -16,7 +16,7 @@ class DataPipeline:
     
     def process_air_data(self, date_from: str, date_to: str, log_file: Path):
         """
-        Process air quality data
+        Process air quality data with streaming logs
         """
         # Call air quality data processing pipeline
         cmd = [
@@ -25,18 +25,11 @@ class DataPipeline:
             "--days", str((datetime.strptime(date_to[:10], "%Y-%m-%d") - datetime.strptime(date_from[:10], "%Y-%m-%d")).days)
         ]
         
-        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-        
-        # Write output to log file
-        with open(log_file, 'w', encoding='utf-8') as f:
-            f.write(f"Executing command: {' '.join(cmd)}\n")
-            f.write(result.stdout)
-        
-        return result.returncode == 0
+        return self._run_command_with_streaming_logs(cmd, log_file)
     
     def process_taxi_data(self, date_from: str, date_to: str, download: bool = False, log_file: Path = None):
         """
-        Check and process taxi data
+        Check and process taxi data with streaming logs
         """
         days = (datetime.strptime(date_to[:10], "%Y-%m-%d") - datetime.strptime(date_from[:10], "%Y-%m-%d")).days
         
@@ -51,15 +44,62 @@ class DataPipeline:
                 "--taxi-types", "yellow", "green"
             ])
         
-        taxi_result = subprocess.run(taxi_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        return self._run_command_with_streaming_logs(taxi_cmd, log_file)
+    
+    def _run_command_with_streaming_logs(self, cmd: list, log_file: Path):
+        """
+        Run a command and stream output to log file in real-time
         
-        # Write output to log file
-        if log_file:
-            with open(log_file, 'w', encoding='utf-8') as f:
-                f.write(f"Executing command: {' '.join(taxi_cmd)}\n")
-                f.write(taxi_result.stdout)
+        Parameters:
+        -----------
+        cmd : list
+            Command to execute
+        log_file : Path
+            Log file path
+            
+        Returns:
+        --------
+        bool
+            True if command succeeded
+        """
+        import subprocess
+        import os
         
-        return taxi_result.returncode == 0
+        # Set environment to disable Python output buffering
+        env = os.environ.copy()
+        env['PYTHONUNBUFFERED'] = '1'
+        
+        # Open log file in append mode
+        with open(log_file, 'w', encoding='utf-8') as log:
+            # Write command to log
+            log.write(f"Executing command: {' '.join(cmd)}\n")
+            log.flush()
+            
+            # Start the process
+            process = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                bufsize=1,
+                universal_newlines=True,
+                env=env
+            )
+            
+            # Stream output line by line
+            while True:
+                line = process.stdout.readline()
+                if not line and process.poll() is not None:
+                    break
+                if line:
+                    # Write to log file
+                    log.write(line)
+                    log.flush()
+            
+            # Wait for process to finish
+            process.wait()
+            
+            return process.returncode == 0
     
     def run(self, date_from: str, date_to: str, download_taxi: bool = False):
         """
