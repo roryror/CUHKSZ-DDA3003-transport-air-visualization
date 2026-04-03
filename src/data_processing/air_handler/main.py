@@ -30,38 +30,33 @@ class AirDataPipeline:
         print("Step 1: Fetch data from OpenAQ API")
         print("="*60)
         
-        # Build date string
-        date_str = date_from[:10].replace("-", "") + "_" + date_to[:10].replace("-", "")
-        parquet_file = f"data/temp_data/openaq_data_{date_str}.parquet"
+        from AirDataDownloader import AirDataDownloader
+        from AirDataMerger import merge_air_data
         
-        # Check if file already exists
-        if Path(parquet_file).exists():
-            print(f"File {parquet_file} already exists, skipping data fetching")
-            return parquet_file
+        # Step 1: Download monthly data
+        downloader = AirDataDownloader(
+            api_key=self.api_key,
+            output_dir="./data/air_data/original_data/"
+        )
+        downloaded_files = downloader.download(date_from, date_to, self.nyc_bbox)
         
-        # Call OpenAQFetcher.py to fetch data
-        cmd = [
-            "python3", "src/data_processing/air_handler/OpenAQFetcher.py",
-            "--api-key", self.api_key,
-            "--bbox", str(self.nyc_bbox[0]), str(self.nyc_bbox[1]), str(self.nyc_bbox[2]), str(self.nyc_bbox[3]),
-            "--date-from", date_from,
-            "--date-to", date_to
-        ]
-        
-        print(f"Executing command: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, text=True)
-        
-        # Print command output
-        print(f"Command output: {result.stdout}")
-        if result.stderr:
-            print(f"Command error: {result.stderr}")
-        
-        if result.returncode != 0:
-            print(f"Data fetching failed: {result.stderr}")
+        if not downloaded_files:
+            print("No files downloaded")
             return None
         
-        print(f"Data fetching successful: {parquet_file}")
-        return parquet_file
+        # Step 2: Merge monthly files
+        merged_file = merge_air_data(
+            input_dir="./data/air_data/original_data/",
+            output_dir="./data/temp_data/",
+            start_date=date_from,
+            end_date=date_to
+        )
+        
+        if not merged_file:
+            print("Merge failed")
+            return None
+        
+        return merged_file
     
     def convert_to_csv(self, parquet_file: str) -> str:
         """

@@ -1,6 +1,9 @@
 # Data files
 /data/air_data/*
 !/data/air_data/.gitkeep
+!/data/air_data/original_data/
+/data/air_data/original_data/*
+!/data/air_data/original_data/.gitkeep
 /data/temp_data/*
 !/data/temp_data/.gitkeep
 /data/taxi_data/*
