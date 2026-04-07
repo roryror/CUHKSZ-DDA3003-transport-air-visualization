@@ -12,7 +12,8 @@ from concurrent.futures import ThreadPoolExecutor
 
 class DataPipeline:
     def __init__(self):
-        pass
+        # Get the absolute path of the current script directory
+        self.script_dir = Path(__file__).parent
     
     def process_air_data(self, date_from: str, date_to: str, log_file: Path, task_timestamp: str):
         """
@@ -20,7 +21,7 @@ class DataPipeline:
         """
         # Call air quality data processing pipeline
         cmd = [
-            "python3", "src/data_processing/air_handler/main.py",
+            "python3", str(self.script_dir / "air_handler/main.py"),
             "--end-date", date_to[:10],
             "--days", str((datetime.strptime(date_to[:10], "%Y-%m-%d") - datetime.strptime(date_from[:10], "%Y-%m-%d")).days),
             "--task-timestamp", task_timestamp
@@ -35,7 +36,7 @@ class DataPipeline:
         days = (datetime.strptime(date_to[:10], "%Y-%m-%d") - datetime.strptime(date_from[:10], "%Y-%m-%d")).days
         
         # Build taxi handler command
-        taxi_cmd = ["python3", "src/data_processing/taxi_handler/main.py"]
+        taxi_cmd = ["python3", str(self.script_dir / "taxi_handler/main.py")]
         
         if download:
             taxi_cmd.extend([
