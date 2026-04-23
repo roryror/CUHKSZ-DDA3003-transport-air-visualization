@@ -1,0 +1,1120 @@
+{
+  "records": [
+    {
+      "zone_id": 7,
+      "zone_name": "Astoria",
+      "borough": "Queens",
+      "sample_count": 276,
+      "mae": 0.832316036720569,
+      "rmse": 1.1087808288692678,
+      "r2": 0.6421627536151343
+    },
+    {
+      "zone_id": 8,
+      "zone_name": "Astoria Park",
+      "borough": "Queens",
+      "sample_count": 370,
+      "mae": 0.5250392080641083,
+      "rmse": 0.7081698176804925,
+      "r2": 0.941899545029839
+    },
+    {
+      "zone_id": 9,
+      "zone_name": "Auburndale",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.3216199398206865,
+      "rmse": 0.38619105073848126,
+      "r2": -0.627578423100362
+    },
+    {
+      "zone_id": 10,
+      "zone_name": "Baisley Park",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.49754065615753823,
+      "rmse": 0.717552367994073,
+      "r2": 0.4020706958532667
+    },
+    {
+      "zone_id": 15,
+      "zone_name": "Bay Terrace/Fort Totten",
+      "borough": "Queens",
+      "sample_count": 369,
+      "mae": 0.33801135212681194,
+      "rmse": 0.4554048826638375,
+      "r2": 0.8562418806003791
+    },
+    {
+      "zone_id": 16,
+      "zone_name": "Bayside",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.3515003675266661,
+      "rmse": 0.45512713927488796,
+      "r2": 0.12272118480459593
+    },
+    {
+      "zone_id": 18,
+      "zone_name": "Bedford Park",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 0.09934975396783675,
+      "rmse": 0.1318450122650701,
+      "r2": -9.159993765914097
+    },
+    {
+      "zone_id": 19,
+      "zone_name": "Bellerose",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.4082435989810458,
+      "rmse": 0.5642280129140359,
+      "r2": 0.3576872680009606
+    },
+    {
+      "zone_id": 20,
+      "zone_name": "Belmont",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 0.0998975945719298,
+      "rmse": 0.13343717940770156,
+      "r2": -2.727608391093234
+    },
+    {
+      "zone_id": 24,
+      "zone_name": "Bloomingdale",
+      "borough": "Manhattan",
+      "sample_count": 407,
+      "mae": 0.6680668972162267,
+      "rmse": 1.0260717822234402,
+      "r2": 0.9530197555857974
+    },
+    {
+      "zone_id": 28,
+      "zone_name": "Briarwood/Jamaica Hills",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.3514491385048165,
+      "rmse": 0.45375677954835586,
+      "r2": 0.13764894804809158
+    },
+    {
+      "zone_id": 36,
+      "zone_name": "Bushwick North",
+      "borough": "Brooklyn",
+      "sample_count": 276,
+      "mae": 0.6021485037443908,
+      "rmse": 0.6747577830587064,
+      "r2": -2.3505644522239746
+    },
+    {
+      "zone_id": 38,
+      "zone_name": "Cambria Heights",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.458186789391217,
+      "rmse": 0.651401037040606,
+      "r2": 0.39165246023230305
+    },
+    {
+      "zone_id": 41,
+      "zone_name": "Central Harlem",
+      "borough": "Manhattan",
+      "sample_count": 407,
+      "mae": 0.8340212410761031,
+      "rmse": 1.3862731090616984,
+      "r2": 0.9543426388714379
+    },
+    {
+      "zone_id": 42,
+      "zone_name": "Central Harlem North",
+      "borough": "Manhattan",
+      "sample_count": 409,
+      "mae": 0.9216156720367321,
+      "rmse": 1.7037203900391182,
+      "r2": 0.9392557243127807
+    },
+    {
+      "zone_id": 43,
+      "zone_name": "Central Park",
+      "borough": "Manhattan",
+      "sample_count": 347,
+      "mae": 0.6396753448640772,
+      "rmse": 0.8090389201655095,
+      "r2": -0.2990165661499602
+    },
+    {
+      "zone_id": 46,
+      "zone_name": "City Island",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.3194465004096093,
+      "rmse": 0.5340030277762524,
+      "r2": 0.9147817206227814
+    },
+    {
+      "zone_id": 47,
+      "zone_name": "Claremont/Bathgate",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.38225129048278994,
+      "rmse": 0.570986052460565,
+      "r2": 0.9039467653946203
+    },
+    {
+      "zone_id": 51,
+      "zone_name": "Co-Op City",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.17227410607931645,
+      "rmse": 0.277783325594811,
+      "r2": 0.9021416786523265
+    },
+    {
+      "zone_id": 53,
+      "zone_name": "College Point",
+      "borough": "Queens",
+      "sample_count": 369,
+      "mae": 0.408991635102908,
+      "rmse": 0.5962621804147896,
+      "r2": 0.8900044054306563
+    },
+    {
+      "zone_id": 56,
+      "zone_name": "Corona",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.6329031060108493,
+      "rmse": 0.9461973074880917,
+      "r2": 0.453239122512773
+    },
+    {
+      "zone_id": 57,
+      "zone_name": "Corona",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.5036426343014578,
+      "rmse": 0.7392414810666933,
+      "r2": 0.4237247599592108
+    },
+    {
+      "zone_id": 58,
+      "zone_name": "Country Club",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.32069224241547517,
+      "rmse": 0.527749943775331,
+      "r2": 0.9126412821716533
+    },
+    {
+      "zone_id": 59,
+      "zone_name": "Crotona Park",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.49475577278969846,
+      "rmse": 0.7422187778999285,
+      "r2": 0.8976553026979355
+    },
+    {
+      "zone_id": 60,
+      "zone_name": "Crotona Park East",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.4625713245395712,
+      "rmse": 0.6512494529261446,
+      "r2": 0.871079282730612
+    },
+    {
+      "zone_id": 63,
+      "zone_name": "Cypress Hills",
+      "borough": "Brooklyn",
+      "sample_count": 276,
+      "mae": 0.5323397375402326,
+      "rmse": 0.6827768575642102,
+      "r2": 0.5192835619517595
+    },
+    {
+      "zone_id": 64,
+      "zone_name": "Douglaston",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.3849446244936865,
+      "rmse": 0.5190370344491928,
+      "r2": 0.3053767142069873
+    },
+    {
+      "zone_id": 69,
+      "zone_name": "East Concourse/Concourse Village",
+      "borough": "Bronx",
+      "sample_count": 407,
+      "mae": 0.5106801062446774,
+      "rmse": 0.611396216628307,
+      "r2": 0.6798827303343417
+    },
+    {
+      "zone_id": 70,
+      "zone_name": "East Elmhurst",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.6776331940467818,
+      "rmse": 1.0089707314707441,
+      "r2": 0.44272789262466483
+    },
+    {
+      "zone_id": 73,
+      "zone_name": "East Flushing",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.32157307569380156,
+      "rmse": 0.3718241963454771,
+      "r2": -1.787858031298407
+    },
+    {
+      "zone_id": 74,
+      "zone_name": "East Harlem North",
+      "borough": "Manhattan",
+      "sample_count": 407,
+      "mae": 0.7684245127960021,
+      "rmse": 1.5733525669682602,
+      "r2": 0.9234057810487986
+    },
+    {
+      "zone_id": 75,
+      "zone_name": "East Harlem South",
+      "borough": "Manhattan",
+      "sample_count": 407,
+      "mae": 0.6434734650393592,
+      "rmse": 0.9602571747998839,
+      "r2": 0.9486999253247761
+    },
+    {
+      "zone_id": 82,
+      "zone_name": "Elmhurst",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 1.6139777734191367,
+      "rmse": 2.3520406797298046,
+      "r2": 0.5471769682565956
+    },
+    {
+      "zone_id": 83,
+      "zone_name": "Elmhurst/Maspeth",
+      "borough": "Queens",
+      "sample_count": 276,
+      "mae": 1.442649476799731,
+      "rmse": 1.9795987638674615,
+      "r2": 0.6945094875229643
+    },
+    {
+      "zone_id": 86,
+      "zone_name": "Far Rockaway",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.5732906932456401,
+      "rmse": 0.8417284705231536,
+      "r2": 0.42390410775434584
+    },
+    {
+      "zone_id": 92,
+      "zone_name": "Flushing",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.32205107401498556,
+      "rmse": 0.37628306286580965,
+      "r2": -1.4158558483577832
+    },
+    {
+      "zone_id": 93,
+      "zone_name": "Flushing Meadows-Corona Park",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.32011660256915986,
+      "rmse": 0.37786779348697835,
+      "r2": -1.0686980013162648
+    },
+    {
+      "zone_id": 94,
+      "zone_name": "Fordham South",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 0.3549101673081365,
+      "rmse": 0.5376761501223208,
+      "r2": 0.6652895994284375
+    },
+    {
+      "zone_id": 95,
+      "zone_name": "Forest Hills",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.5092249634076265,
+      "rmse": 0.746709862253028,
+      "r2": 0.41729301951635256
+    },
+    {
+      "zone_id": 96,
+      "zone_name": "Forest Park/Highland Park",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.5496820989975145,
+      "rmse": 0.7895957914200419,
+      "r2": 0.421454525348393
+    },
+    {
+      "zone_id": 98,
+      "zone_name": "Fresh Meadows",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.32153747912653147,
+      "rmse": 0.38765871320312645,
+      "r2": -0.5331436549283586
+    },
+    {
+      "zone_id": 101,
+      "zone_name": "Glen Oaks",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.425654993104964,
+      "rmse": 0.5962320566056091,
+      "r2": 0.38038753948029
+    },
+    {
+      "zone_id": 102,
+      "zone_name": "Glendale",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.7659312385506117,
+      "rmse": 1.1542635809903776,
+      "r2": 0.4630012680955239
+    },
+    {
+      "zone_id": 116,
+      "zone_name": "Hamilton Heights",
+      "borough": "Manhattan",
+      "sample_count": 409,
+      "mae": 0.9185017837816782,
+      "rmse": 1.6957781398999843,
+      "r2": 0.9388447390226325
+    },
+    {
+      "zone_id": 119,
+      "zone_name": "Highbridge",
+      "borough": "Bronx",
+      "sample_count": 409,
+      "mae": 0.5982809812757883,
+      "rmse": 0.6588942580167778,
+      "r2": -0.2216565180049186
+    },
+    {
+      "zone_id": 120,
+      "zone_name": "Highbridge Park",
+      "borough": "Manhattan",
+      "sample_count": 409,
+      "mae": 1.6459379060346186,
+      "rmse": 2.4872497007894188,
+      "r2": 0.7064745213181496
+    },
+    {
+      "zone_id": 121,
+      "zone_name": "Hillcrest/Pomonok",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.3315052170371202,
+      "rmse": 0.3770635017362586,
+      "r2": -2.5842611187716895
+    },
+    {
+      "zone_id": 122,
+      "zone_name": "Hollis",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.3943832682852216,
+      "rmse": 0.5334017032289595,
+      "r2": 0.31439129307830294
+    },
+    {
+      "zone_id": 124,
+      "zone_name": "Howard Beach",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.6474066762499184,
+      "rmse": 0.9675047089128853,
+      "r2": 0.44727882580826916
+    },
+    {
+      "zone_id": 126,
+      "zone_name": "Hunts Point",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.5290476267012223,
+      "rmse": 0.5745173654992186,
+      "r2": -3.478024717446848
+    },
+    {
+      "zone_id": 127,
+      "zone_name": "Inwood",
+      "borough": "Manhattan",
+      "sample_count": 404,
+      "mae": 1.2437533007589072,
+      "rmse": 1.8667006783565245,
+      "r2": 0.6839108386721985
+    },
+    {
+      "zone_id": 128,
+      "zone_name": "Inwood Hill Park",
+      "borough": "Manhattan",
+      "sample_count": 403,
+      "mae": 0.8393020550477902,
+      "rmse": 1.1703818649615017,
+      "r2": 0.7933925977813162
+    },
+    {
+      "zone_id": 129,
+      "zone_name": "Jackson Heights",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 1.1137626155834484,
+      "rmse": 1.6597703124664707,
+      "r2": 0.5193992880122358
+    },
+    {
+      "zone_id": 130,
+      "zone_name": "Jamaica",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.42023595735446856,
+      "rmse": 0.574343634885781,
+      "r2": 0.32943318384913867
+    },
+    {
+      "zone_id": 131,
+      "zone_name": "Jamaica Estates",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.3382847936849452,
+      "rmse": 0.4261949609091613,
+      "r2": -0.028782626117884735
+    },
+    {
+      "zone_id": 132,
+      "zone_name": "JFK Airport",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.7362372455622138,
+      "rmse": 1.012829884294122,
+      "r2": 0.2636369897996892
+    },
+    {
+      "zone_id": 134,
+      "zone_name": "Kew Gardens",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.4126364749341085,
+      "rmse": 0.5715061363043299,
+      "r2": 0.3509549351100174
+    },
+    {
+      "zone_id": 135,
+      "zone_name": "Kew Gardens Hills",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.33687127203511835,
+      "rmse": 0.37989717711329124,
+      "r2": -2.7564953589915486
+    },
+    {
+      "zone_id": 136,
+      "zone_name": "Kingsbridge Heights",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 0.5505647830859606,
+      "rmse": 0.8393071057045746,
+      "r2": 0.6758998451688789
+    },
+    {
+      "zone_id": 138,
+      "zone_name": "LaGuardia Airport",
+      "borough": "Queens",
+      "sample_count": 369,
+      "mae": 0.579347273186435,
+      "rmse": 0.8094310527159695,
+      "r2": 0.8608892791617176
+    },
+    {
+      "zone_id": 139,
+      "zone_name": "Laurelton",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.4880296450668005,
+      "rmse": 0.7017366552729496,
+      "r2": 0.4051831738303574
+    },
+    {
+      "zone_id": 143,
+      "zone_name": "Lincoln Square West",
+      "borough": "Manhattan",
+      "sample_count": 347,
+      "mae": 0.6360815585300316,
+      "rmse": 0.799847981747489,
+      "r2": -0.3286404456207592
+    },
+    {
+      "zone_id": 146,
+      "zone_name": "Long Island City/Queens Plaza",
+      "borough": "Queens",
+      "sample_count": 276,
+      "mae": 0.7647697512604981,
+      "rmse": 0.9946375979573138,
+      "r2": 0.5800887854369225
+    },
+    {
+      "zone_id": 147,
+      "zone_name": "Longwood",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 1.0184915572054916,
+      "rmse": 1.859263328208747,
+      "r2": 0.9382401999530885
+    },
+    {
+      "zone_id": 151,
+      "zone_name": "Manhattan Valley",
+      "borough": "Manhattan",
+      "sample_count": 407,
+      "mae": 0.5954742502527975,
+      "rmse": 0.8604091426187382,
+      "r2": 0.9364838569160941
+    },
+    {
+      "zone_id": 152,
+      "zone_name": "Manhattanville",
+      "borough": "Manhattan",
+      "sample_count": 409,
+      "mae": 0.9340784268830526,
+      "rmse": 1.7282650584793995,
+      "r2": 0.9389010519138884
+    },
+    {
+      "zone_id": 153,
+      "zone_name": "Marble Hill",
+      "borough": "Manhattan",
+      "sample_count": 404,
+      "mae": 0.5509915431119805,
+      "rmse": 0.8387952783671532,
+      "r2": 0.6764553850253876
+    },
+    {
+      "zone_id": 157,
+      "zone_name": "Maspeth",
+      "borough": "Queens",
+      "sample_count": 276,
+      "mae": 1.5578623310446413,
+      "rmse": 2.142577905814508,
+      "r2": 0.6935099054528105
+    },
+    {
+      "zone_id": 159,
+      "zone_name": "Melrose South",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 1.012928643603832,
+      "rmse": 1.8476721387507355,
+      "r2": 0.9383594202500798
+    },
+    {
+      "zone_id": 160,
+      "zone_name": "Middle Village",
+      "borough": "Queens",
+      "sample_count": 276,
+      "mae": 1.5268378209996847,
+      "rmse": 2.0970255191774854,
+      "r2": 0.6938533878638904
+    },
+    {
+      "zone_id": 166,
+      "zone_name": "Morningside Heights",
+      "borough": "Manhattan",
+      "sample_count": 347,
+      "mae": 0.8323700990236789,
+      "rmse": 1.442559547092178,
+      "r2": 0.9460104344257577
+    },
+    {
+      "zone_id": 167,
+      "zone_name": "Morrisania/Melrose",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.8155892018985297,
+      "rmse": 1.4701015479165904,
+      "r2": 0.9363870077042291
+    },
+    {
+      "zone_id": 168,
+      "zone_name": "Mott Haven/Port Morris",
+      "borough": "Bronx",
+      "sample_count": 407,
+      "mae": 1.0262385725641834,
+      "rmse": 2.0594307577299773,
+      "r2": 0.9044404456244238
+    },
+    {
+      "zone_id": 169,
+      "zone_name": "Mount Hope",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 0.6061848694463865,
+      "rmse": 0.8852679184697899,
+      "r2": 0.6566774665347684
+    },
+    {
+      "zone_id": 171,
+      "zone_name": "Murray Hill-Queens",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.32934352345071366,
+      "rmse": 0.408174239947948,
+      "r2": -0.22184652773988378
+    },
+    {
+      "zone_id": 173,
+      "zone_name": "North Corona",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.7641442574660505,
+      "rmse": 1.1527140911982234,
+      "r2": 0.4745795773786381
+    },
+    {
+      "zone_id": 174,
+      "zone_name": "Norwood",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 0.10305994929833051,
+      "rmse": 0.13252431259512132,
+      "r2": -1771.105794090635
+    },
+    {
+      "zone_id": 175,
+      "zone_name": "Oakland Gardens",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.36705692839776716,
+      "rmse": 0.4855571850705941,
+      "r2": 0.24548966767251534
+    },
+    {
+      "zone_id": 179,
+      "zone_name": "Old Astoria",
+      "borough": "Queens",
+      "sample_count": 407,
+      "mae": 0.663740450830005,
+      "rmse": 0.9964661598424325,
+      "r2": 0.9318799314364672
+    },
+    {
+      "zone_id": 180,
+      "zone_name": "Ozone Park",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.622603499999211,
+      "rmse": 0.9279066577904159,
+      "r2": 0.4421587964928634
+    },
+    {
+      "zone_id": 182,
+      "zone_name": "Parkchester",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.3455920891837776,
+      "rmse": 0.546944257426188,
+      "r2": 0.90636443495253
+    },
+    {
+      "zone_id": 183,
+      "zone_name": "Pelham Bay",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.27371817539134996,
+      "rmse": 0.45384685844018846,
+      "r2": 0.9121916717444215
+    },
+    {
+      "zone_id": 184,
+      "zone_name": "Pelham Bay Park",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.24670252390391686,
+      "rmse": 0.4101093760120237,
+      "r2": 0.911482244388337
+    },
+    {
+      "zone_id": 191,
+      "zone_name": "Queens Village",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.4055137994711721,
+      "rmse": 0.552950958919673,
+      "r2": 0.32885609153426254
+    },
+    {
+      "zone_id": 192,
+      "zone_name": "Queensboro Hill",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.3363745065961421,
+      "rmse": 0.3786546938009286,
+      "r2": -2.7490637583689463
+    },
+    {
+      "zone_id": 194,
+      "zone_name": "Randalls Island",
+      "borough": "Manhattan",
+      "sample_count": 407,
+      "mae": 0.7822133007239161,
+      "rmse": 1.509511440780092,
+      "r2": 0.92127583547488
+    },
+    {
+      "zone_id": 196,
+      "zone_name": "Rego Park",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 1.2011580022622972,
+      "rmse": 1.7800465670723682,
+      "r2": 0.5266011519759751
+    },
+    {
+      "zone_id": 197,
+      "zone_name": "Richmond Hill",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.5729952083068345,
+      "rmse": 0.8498179219188897,
+      "r2": 0.4347144602476709
+    },
+    {
+      "zone_id": 198,
+      "zone_name": "Ridgewood",
+      "borough": "Queens",
+      "sample_count": 276,
+      "mae": 0.6677179977983967,
+      "rmse": 0.8916946110195922,
+      "r2": 0.6182551824251332
+    },
+    {
+      "zone_id": 199,
+      "zone_name": "Rikers Island",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.5287022568840536,
+      "rmse": 0.8238339333847698,
+      "r2": 0.9082567402783109
+    },
+    {
+      "zone_id": 200,
+      "zone_name": "Riverdale/North Riverdale/Fieldston",
+      "borough": "Bronx",
+      "sample_count": 403,
+      "mae": 0.4327842508642466,
+      "rmse": 0.5981751643888352,
+      "r2": 0.7888265596724294
+    },
+    {
+      "zone_id": 203,
+      "zone_name": "Rosedale",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.5269681400350107,
+      "rmse": 0.7700163716736189,
+      "r2": 0.4190410324656778
+    },
+    {
+      "zone_id": 205,
+      "zone_name": "Saint Albans",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.4186759192717512,
+      "rmse": 0.5745849914175,
+      "r2": 0.33436778905100817
+    },
+    {
+      "zone_id": 207,
+      "zone_name": "Saint Michaels Cemetery/Woodside",
+      "borough": "Queens",
+      "sample_count": 403,
+      "mae": 0.867285789874768,
+      "rmse": 1.3206071372737591,
+      "r2": 0.8491722239128616
+    },
+    {
+      "zone_id": 208,
+      "zone_name": "Schuylerville/Edgewater Park",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.34665175667276343,
+      "rmse": 0.5490674819562148,
+      "r2": 0.9066405920921371
+    },
+    {
+      "zone_id": 212,
+      "zone_name": "Soundview/Bruckner",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.4581656625906253,
+      "rmse": 0.6310715276751172,
+      "r2": 0.8601265928400503
+    },
+    {
+      "zone_id": 213,
+      "zone_name": "Soundview/Castle Hill",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.45488529916270803,
+      "rmse": 0.5450069002328836,
+      "r2": 0.6345681893583859
+    },
+    {
+      "zone_id": 215,
+      "zone_name": "South Jamaica",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.4567416896035894,
+      "rmse": 0.6463711272091687,
+      "r2": 0.38499523874480446
+    },
+    {
+      "zone_id": 216,
+      "zone_name": "South Ozone Park",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.549897038663408,
+      "rmse": 0.8081960071761082,
+      "r2": 0.4307914447196117
+    },
+    {
+      "zone_id": 218,
+      "zone_name": "Springfield Gardens North",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.5101916547755293,
+      "rmse": 0.7383037718951025,
+      "r2": 0.41225357431045084
+    },
+    {
+      "zone_id": 219,
+      "zone_name": "Springfield Gardens South",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.5461353396640158,
+      "rmse": 0.8024225694011163,
+      "r2": 0.4272291028768225
+    },
+    {
+      "zone_id": 220,
+      "zone_name": "Spuyten Duyvil/Kingsbridge",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 0.5361203776656439,
+      "rmse": 0.8162047510958085,
+      "r2": 0.6742875549362373
+    },
+    {
+      "zone_id": 223,
+      "zone_name": "Steinway",
+      "borough": "Queens",
+      "sample_count": 403,
+      "mae": 0.6783069339196177,
+      "rmse": 1.105062226393193,
+      "r2": 0.8957973086047384
+    },
+    {
+      "zone_id": 226,
+      "zone_name": "Sunnyside",
+      "borough": "Queens",
+      "sample_count": 276,
+      "mae": 1.034436920268373,
+      "rmse": 1.4157270760650156,
+      "r2": 0.6838233661150537
+    },
+    {
+      "zone_id": 235,
+      "zone_name": "University Heights/Morris Heights",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 1.3413950153747713,
+      "rmse": 2.01164755951068,
+      "r2": 0.6843321349988922
+    },
+    {
+      "zone_id": 236,
+      "zone_name": "Upper East Side North",
+      "borough": "Manhattan",
+      "sample_count": 347,
+      "mae": 0.6756033574615419,
+      "rmse": 0.862462943489684,
+      "r2": 0.34869738128926064
+    },
+    {
+      "zone_id": 238,
+      "zone_name": "Upper West Side North",
+      "borough": "Manhattan",
+      "sample_count": 347,
+      "mae": 0.5642140629715213,
+      "rmse": 0.7286118160239957,
+      "r2": 0.6077711311462806
+    },
+    {
+      "zone_id": 239,
+      "zone_name": "Upper West Side South",
+      "borough": "Manhattan",
+      "sample_count": 347,
+      "mae": 0.6201939207655811,
+      "rmse": 0.7847194389698975,
+      "r2": -0.2874131976491814
+    },
+    {
+      "zone_id": 240,
+      "zone_name": "Van Cortlandt Park",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 0.1480499397886612,
+      "rmse": 0.2119691917953999,
+      "r2": 0.49562069169328715
+    },
+    {
+      "zone_id": 241,
+      "zone_name": "Van Cortlandt Village",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 0.15835679164205804,
+      "rmse": 0.22824246217862929,
+      "r2": 0.5389474787842975
+    },
+    {
+      "zone_id": 242,
+      "zone_name": "Van Nest/Morris Park",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.2336040455457332,
+      "rmse": 0.3869391854396077,
+      "r2": 0.9108979087956149
+    },
+    {
+      "zone_id": 243,
+      "zone_name": "Washington Heights North",
+      "borough": "Manhattan",
+      "sample_count": 403,
+      "mae": 1.5288649463482098,
+      "rmse": 2.1172216972117486,
+      "r2": 0.7925855184535209
+    },
+    {
+      "zone_id": 244,
+      "zone_name": "Washington Heights South",
+      "borough": "Manhattan",
+      "sample_count": 409,
+      "mae": 1.6434580101140124,
+      "rmse": 2.4875392923394966,
+      "r2": 0.7076832182427029
+    },
+    {
+      "zone_id": 247,
+      "zone_name": "West Concourse",
+      "borough": "Bronx",
+      "sample_count": 409,
+      "mae": 0.5964058740625089,
+      "rmse": 0.6560934044278487,
+      "r2": -0.21117917547276055
+    },
+    {
+      "zone_id": 248,
+      "zone_name": "West Farms/Bronx River",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.4575208190476965,
+      "rmse": 0.7104008805252859,
+      "r2": 0.9060424513716397
+    },
+    {
+      "zone_id": 250,
+      "zone_name": "Westchester Village/Unionport",
+      "borough": "Bronx",
+      "sample_count": 369,
+      "mae": 0.3537074033897917,
+      "rmse": 0.544362155684902,
+      "r2": 0.9008251452832275
+    },
+    {
+      "zone_id": 252,
+      "zone_name": "Whitestone",
+      "borough": "Queens",
+      "sample_count": 369,
+      "mae": 0.40269007381836686,
+      "rmse": 0.5830586095232478,
+      "r2": 0.8874305560126364
+    },
+    {
+      "zone_id": 253,
+      "zone_name": "Willets Point",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.3781527468127745,
+      "rmse": 0.5079309396608964,
+      "r2": 0.29585076552051326
+    },
+    {
+      "zone_id": 254,
+      "zone_name": "Williamsbridge/Olinville",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 0.10111112829135123,
+      "rmse": 0.1356465089734365,
+      "r2": -1.940067974541647
+    },
+    {
+      "zone_id": 258,
+      "zone_name": "Woodhaven",
+      "borough": "Queens",
+      "sample_count": 277,
+      "mae": 0.7229652566301801,
+      "rmse": 1.0881731204284093,
+      "r2": 0.4607815008650734
+    },
+    {
+      "zone_id": 259,
+      "zone_name": "Woodlawn/Wakefield",
+      "borough": "Bronx",
+      "sample_count": 404,
+      "mae": 0.26825386505503696,
+      "rmse": 0.4024971514054469,
+      "r2": 0.6495276828996476
+    },
+    {
+      "zone_id": 260,
+      "zone_name": "Woodside",
+      "borough": "Queens",
+      "sample_count": 276,
+      "mae": 1.355121557357725,
+      "rmse": 1.853214005455558,
+      "r2": 0.6927083804532681
+    },
+    {
+      "zone_id": 262,
+      "zone_name": "Yorkville East",
+      "borough": "Manhattan",
+      "sample_count": 407,
+      "mae": 0.5795331068011023,
+      "rmse": 0.8083068736196924,
+      "r2": 0.9124329315949822
+    },
+    {
+      "zone_id": 263,
+      "zone_name": "Yorkville West",
+      "borough": "Manhattan",
+      "sample_count": 407,
+      "mae": 0.5687670797772706,
+      "rmse": 0.767245968610548,
+      "r2": 0.8801398168982766
+    }
+  ]
+}

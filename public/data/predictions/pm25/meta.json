@@ -1,0 +1,20 @@
+{
+  "module": "Auxiliary Prediction Module",
+  "pollutant": "pm25",
+  "target_column": "target_pollution_anomaly",
+  "window_hours": 6,
+  "horizon_hours": 1,
+  "step_hours": 3,
+  "sample_count": 634811,
+  "test_sample_count": 41821,
+  "zone_count": 124,
+  "test_metrics": {
+    "mae": 0.6096230149269104,
+    "rmse": 1.0585033893585205,
+    "r2": 0.923201858997345
+  },
+  "test_window": {
+    "start": "2026-01-07 21:00:00",
+    "end": "2026-02-27 23:00:00"
+  }
+}
