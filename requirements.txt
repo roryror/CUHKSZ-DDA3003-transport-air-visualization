@@ -1,4 +1,14 @@
-# Data Processing Dependencies
+# Core data processing
 pandas
 pyarrow
 openaq
+
+# Spatial analysis
+geopandas
+fiona
+shapely
+pyproj
+matplotlib
+
+# Modeling
+torch

@@ -96,7 +96,14 @@ class DataDownloader:
         """
         return self.output_dir / f"openaq_data_{period_name}.parquet"
     
-    def download_period(self, start_date: datetime, end_date: datetime, period_name: str, bbox: tuple) -> tuple[Optional[Path], bool]:
+    def download_period(
+        self,
+        start_date: datetime,
+        end_date: datetime,
+        period_name: str,
+        bbox: tuple,
+        max_retries: int = 4,
+    ) -> tuple[Optional[Path], bool]:
         """
         Download data for a single 2-month period
         
@@ -137,22 +144,36 @@ class DataDownloader:
             "--date-from", date_from,
             "--date-to", date_to
         ]
-        
-        result = subprocess.run(cmd, capture_output=True, text=True)
-        
-        # The OpenAQFetcher.py saves to temp_data, let's move it to our output dir
+
         temp_file = Path(f"./data/temp_data/openaq_data_{date_from[:10].replace('-', '')}_{date_to[:10].replace('-', '')}.parquet")
-        
-        if temp_file.exists():
-            # Move to our output directory
-            temp_file.rename(output_file)
-            print(f"  Successfully downloaded: {output_file.name}")
-            return output_file, True
-        else:
+
+        for attempt in range(1, max_retries + 1):
+            result = subprocess.run(cmd, capture_output=True, text=True)
+
+            if temp_file.exists():
+                temp_file.rename(output_file)
+                print(f"  Successfully downloaded: {output_file.name}")
+                return output_file, True
+
+            stderr = (result.stderr or "").strip()
+            combined_output = "\n".join(part for part in [result.stdout.strip(), stderr] if part)
+
+            if "429" in combined_output:
+                wait_seconds = 30 * attempt
+                print(f"  OpenAQ rate limit hit for {period_name} (attempt {attempt}/{max_retries})")
+                print(f"  Waiting {wait_seconds} seconds before retry...")
+                time.sleep(wait_seconds)
+                continue
+
             print(f"  Download failed for {period_name}")
-            if result.stderr:
-                print(f"  Error: {result.stderr}")
+            if stderr:
+                print(f"  Error: {stderr}")
             return None, False
+
+        print(f"  Download failed for {period_name} after {max_retries} attempts")
+        if result.stderr:
+            print(f"  Error: {result.stderr}")
+        return None, False
     
     def download(self, start_date_str: str, end_date_str: str, bbox: tuple) -> List[Path]:
         """

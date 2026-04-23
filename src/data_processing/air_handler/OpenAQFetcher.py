@@ -31,6 +31,23 @@ class OpenAQFetcher:
         self.map_location_infos: dict[str, LocationInfo] = {}
         self.raw_data: list[dict] = []
         self.aggregated_data = None  # Type is pd.DataFrame or None
+        self.max_retries = 4
+
+    def _call_with_retries(self, request_name: str, fn, *args, **kwargs):
+        last_exception = None
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                return fn(*args, **kwargs)
+            except Exception as e:
+                last_exception = e
+                message = str(e)
+                if "429" not in message and "Rate limit exceeded" not in message:
+                    raise
+                wait_seconds = 30 * attempt
+                print(f"{request_name} rate limited (attempt {attempt}/{self.max_retries})")
+                print(f"Waiting {wait_seconds} seconds before retry...")
+                time.sleep(wait_seconds)
+        raise last_exception
 
     def Handle(self):
         ret = 0
@@ -80,10 +97,12 @@ class OpenAQFetcher:
                 has_more = True
                 
                 while has_more:
-                    locations_response = self.client.locations.list(
+                    locations_response = self._call_with_retries(
+                        "batchGetLocationInfo",
+                        self.client.locations.list,
                         bbox=self.bbox,
                         limit=limit,
-                        page=page
+                        page=page,
                     )
                     
                     if locations_response.results:
@@ -152,7 +171,11 @@ class OpenAQFetcher:
     def batchGetSensorInfo(self, timeout: int = 10) -> int:
         for location_id, location_info in self.map_location_infos.items():
             try:
-                sensors_response = self.client.locations.get(int(location_id))
+                sensors_response = self._call_with_retries(
+                    "batchGetSensorInfo",
+                    self.client.locations.get,
+                    int(location_id),
+                )
                 if sensors_response.results:
                     location_obj = sensors_response.results[0]
                     sensor_list: list[SensorInfo] = []
@@ -195,12 +218,14 @@ class OpenAQFetcher:
                 while has_more:
                     try:
                         # Use SDK's measurements.list() method, supports date filtering and pagination
-                        measurements_response = self.client.measurements.list(
+                        measurements_response = self._call_with_retries(
+                            "batchGetMeasurementInfo",
+                            self.client.measurements.list,
                             sensors_id=int(sensor.sensor_id),
                             datetime_from=self.date_range[0],
                             datetime_to=self.date_range[1],
                             limit=limit,
-                            page=page
+                            page=page,
                         )
                         
                         results = measurements_response.results

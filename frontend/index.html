@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NYC Taxi Mobility & Air Quality Explorer</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260423layoutfix4" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="masthead">
+        <div class="masthead-copy">
+          <p class="eyebrow">DDA3003 Visual Analytics</p>
+          <h1>NYC Taxi Mobility & Air Quality Explorer</h1>
+          <p class="lede">
+            Explore where traffic activity, pollution, delayed relationships, and priority zones
+            align across New York City taxi zones.
+          </p>
+        </div>
+        <div class="masthead-meta">
+          <p id="dataset-range">Loading dataset…</p>
+          <p id="dataset-summary"></p>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="control-rail">
+          <section class="control-group filter-group">
+            <h2>Filters</h2>
+            <label>
+              <span>Pollutant</span>
+              <select id="pollutant-select"></select>
+            </label>
+            <label>
+              <span>Map View</span>
+              <select id="metric-select"></select>
+            </label>
+            <label>
+              <span>Borough</span>
+              <select id="borough-select"></select>
+            </label>
+          </section>
+
+          <section class="control-group">
+            <h2>Legend</h2>
+            <div id="legend" class="legend"></div>
+          </section>
+
+          <section class="control-group insight-copy">
+            <h2>Interpretation</h2>
+            <p>
+              Start with the map for overview. Use the ranking list for quick comparison. Click one
+              zone to inspect local patterns in the detail panel.
+            </p>
+          </section>
+        </aside>
+
+        <section class="primary-stage">
+          <div class="kpi-strip">
+            <div class="kpi">
+              <span class="kpi-label">Top Priority Zone</span>
+              <strong id="kpi-top-zone">-</strong>
+            </div>
+            <div class="kpi">
+              <span class="kpi-label">Strongest Delayed Relationship</span>
+              <strong id="kpi-best-corr">-</strong>
+            </div>
+            <div class="kpi">
+              <span class="kpi-label">Zones Shown</span>
+              <strong id="kpi-zone-count">-</strong>
+            </div>
+          </div>
+
+          <section class="panel map-panel">
+            <div class="panel-head">
+              <div>
+                <p class="section-tag">Overview</p>
+                <h2 id="overview-title">Distribution Across NYC Taxi Zones</h2>
+              </div>
+              <p class="panel-note">Hover for zone summary. Click to inspect time series.</p>
+            </div>
+            <div id="map"></div>
+          </section>
+
+          <section class="lower-grid">
+            <section class="panel ranking-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="section-tag">Comparison</p>
+                  <h2 id="ranking-title">Highest Priority Zones</h2>
+                </div>
+              </div>
+              <ol id="ranking-list" class="ranking-list"></ol>
+            </section>
+
+            <section class="panel analysis-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="section-tag">Analysis</p>
+                  <h2 id="analysis-title">Cross-Zone Pattern</h2>
+                </div>
+              </div>
+              <div id="analysis-chart" class="chart"></div>
+              <div id="borough-chart" class="chart"></div>
+            </section>
+          </section>
+        </section>
+
+        <aside class="detail-rail">
+          <section class="panel detail-panel">
+            <div class="panel-head">
+              <div>
+                <p class="section-tag">Details</p>
+                <h2 id="detail-title">Select a zone</h2>
+                <p id="detail-subtitle" class="detail-subtitle">Choose one zone from the map or ranking list.</p>
+              </div>
+            </div>
+            <dl id="detail-summary" class="summary-grid"></dl>
+            <p id="detail-footnote" class="detail-footnote"></p>
+            <div class="detail-chart-block">
+              <div class="detail-chart-head">
+                <h3>Yearly Rhythm</h3>
+                <p>Daily traffic and PM2.5 patterns across the full analysis window.</p>
+              </div>
+              <div id="trend-chart" class="chart tall"></div>
+            </div>
+            <div class="detail-chart-block">
+              <div class="detail-chart-head">
+                <div>
+                  <h3>Recent Co-Movement</h3>
+                  <p id="focus-window-label">Hourly values for the most recent 30 days.</p>
+                </div>
+                <p id="lag-summary">Strongest delayed relationship for this zone.</p>
+              </div>
+              <div id="timeseries-chart" class="chart"></div>
+            </div>
+            <section class="prediction-module">
+              <div class="detail-chart-head">
+                <div>
+                  <h3>Short-Term Forecast</h3>
+                  <p id="prediction-subtitle">
+                    Observed versus forecasted next-hour PM2.5 change in the held-out test period.
+                  </p>
+                </div>
+              </div>
+              <div id="prediction-cards" class="prediction-cards"></div>
+              <p id="prediction-meta-line" class="prediction-meta-line"></p>
+              <div id="prediction-chart" class="chart medium"></div>
+              <div id="prediction-residual-chart" class="chart small"></div>
+              <p id="prediction-note" class="detail-footnote"></p>
+            </section>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+    <script src="./app.js?v=20260423layoutfix4"></script>
+  </body>
+</html>

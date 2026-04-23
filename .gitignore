@@ -33,6 +33,7 @@ __pycache__/
 .env.development.local
 .env.test.local
 .env.production.local
+.venv/
 
 # OS files
 .DS_Store
@@ -41,6 +42,8 @@ Thumbs.db
 # Log files
 *.log
 /logs/
+/code-B/logs/
+/code-B/output/
 
 # Distribution / packaging
 .Python
@@ -80,3 +83,16 @@ coverage.xml
 *.temp
 .tmp/
 .temp/
+
+# Local artifacts and generated outputs
+/backups/
+/outputs/
+/frontend/public/data/
+/frontend.zip
+/code-B/
+
+# Member B module artifacts
+/code-B/.DS_Store
+/code-B/__pycache__/
+/code-B/data/openaq_data_*
+/code-B/data/taxi_data_*
