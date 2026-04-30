@@ -89,7 +89,7 @@ body {
 
 .workspace {
   display: grid;
-  grid-template-columns: 260px minmax(0, 1.45fr) 420px;
+  grid-template-columns: 228px minmax(0, 1.62fr) 320px;
   gap: 20px;
   padding-top: 18px;
 }
@@ -248,8 +248,33 @@ select {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  gap: 18px;
+  gap: 12px;
   margin-bottom: 16px;
+}
+
+.map-panel .panel-head,
+.detail-chart-head {
+  align-items: start;
+}
+
+.map-panel .panel-head {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) 1fr;
+  gap: 18px;
+}
+
+.map-panel .panel-head h2 {
+  font-size: 1rem;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.map-panel .panel-note {
+  justify-self: end;
+  margin: 0;
+  font-size: 0.68rem;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 #map {
@@ -358,63 +383,63 @@ select {
 }
 
 .chart.medium {
-  height: 250px;
+  height: 230px;
 }
 
 .chart.tall {
-  height: 420px;
+  height: 388px;
 }
 
 .chart.small {
-  height: 180px;
+  height: 156px;
 }
 
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px 14px;
-  margin: 0 0 12px;
+  gap: 6px 12px;
+  margin: 0 0 10px;
 }
 
 .summary-grid div {
-  padding-top: 8px;
+  padding-top: 6px;
   border-top: 1px solid var(--rule);
   border-radius: var(--radius-sm);
 }
 
 .summary-grid dt {
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .summary-grid dd {
-  margin: 6px 0 0;
-  font-size: 0.96rem;
+  margin: 4px 0 0;
+  font-size: 0.88rem;
   font-weight: 600;
 }
 
 .detail-panel {
-  min-height: 1560px;
+  min-height: 1460px;
 }
 
 .detail-subtitle {
   margin: 6px 0 0;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   line-height: 1.45;
 }
 
 .detail-footnote {
   margin: 0 0 10px;
   color: var(--muted);
-  font-size: 0.84rem;
+  font-size: 0.78rem;
   line-height: 1.5;
 }
 
 .detail-chart-block {
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 .prediction-module {
@@ -424,22 +449,22 @@ select {
 }
 
 .prediction-module .chart.medium {
-  height: 280px;
+  height: 248px;
 }
 
 .prediction-module .chart.small {
-  height: 170px;
+  height: 146px;
 }
 
 .prediction-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin: 10px 0 8px;
+  gap: 6px;
+  margin: 8px 0 8px;
 }
 
 .prediction-card {
-  padding: 8px 10px;
+  padding: 7px 9px;
   border: 1px solid rgba(31, 39, 34, 0.08);
   border-radius: var(--radius-md);
   background: rgba(255, 252, 246, 0.52);
@@ -447,44 +472,46 @@ select {
 
 .prediction-card dt {
   color: var(--muted);
-  font-size: 0.66rem;
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .prediction-card dd {
   margin: 4px 0 0;
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   font-weight: 600;
 }
 
 .prediction-meta-line {
   margin: 0 0 10px;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   line-height: 1.4;
 }
 
 .detail-chart-head {
   display: flex;
-  align-items: end;
+  align-items: start;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 8px;
 }
 
 .detail-chart-head h3 {
   margin: 0;
   font-family: var(--serif);
-  font-size: 1rem;
+  font-size: 0.84rem;
   font-weight: 600;
+  line-height: 1.12;
+  white-space: nowrap;
 }
 
 .detail-chart-head p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.82rem;
-  line-height: 1.4;
+  font-size: 0.7rem;
+  line-height: 1.28;
   text-align: right;
 }
 
@@ -493,8 +520,9 @@ select {
 }
 
 #lag-summary {
-  max-width: 260px;
+  max-width: none;
   text-align: right;
+  white-space: nowrap;
 }
 
 .leaflet-container {
@@ -516,7 +544,7 @@ select {
   font-size: 0.86rem;
 }
 
-@media (max-width: 1320px) {
+@media (max-width: 1140px) {
   .workspace {
     grid-template-columns: 240px minmax(0, 1fr);
   }

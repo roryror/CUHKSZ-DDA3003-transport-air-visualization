@@ -195,7 +195,7 @@ function setDatasetMeta() {
 
 function setContextTitles() {
   const pollutant = pollutantLabel(state.pollutant);
-  document.getElementById("overview-title").textContent = `${metricLabels[state.metric]} of ${pollutant}`;
+  document.getElementById("overview-title").textContent = `${metricLabels[state.metric]} · ${pollutant}`;
   document.getElementById("ranking-title").textContent = `Top Zones by ${metricLabels[state.metric]} for ${pollutant}`;
   document.getElementById("analysis-title").textContent = `Pattern Summary for ${pollutant}`;
 }
@@ -481,8 +481,8 @@ function renderTrendChart(dailySeries, record) {
     animationDuration: 500,
     backgroundColor: "transparent",
     grid: [
-      { left: 54, right: 18, top: 34, height: 132 },
-      { left: 54, right: 18, top: 220, height: 132 },
+      { left: 58, right: 18, top: 36, height: 124 },
+      { left: 58, right: 18, top: 204, height: 124 },
     ],
     tooltip: {
       trigger: "axis",
@@ -498,11 +498,12 @@ function renderTrendChart(dailySeries, record) {
     graphic: {
       type: "text",
       right: 18,
-      top: 6,
+      top: 2,
       style: {
-        text: "Faint line = daily value · bold line = 7-day trend",
+        text: "daily = faint · 7-day = bold",
         fill: "#5e675f",
-        font: '12px "Avenir Next", "Segoe UI", sans-serif',
+        font: '10px "Avenir Next", "Segoe UI", sans-serif',
+        textAlign: "right",
       },
     },
     xAxis: [
@@ -533,7 +534,10 @@ function renderTrendChart(dailySeries, record) {
         type: "value",
         gridIndex: 0,
         name: "Daily Traffic",
-        nameTextStyle: { color: "#5e675f", padding: [0, 0, 8, 0] },
+        nameLocation: "middle",
+        nameRotate: 90,
+        nameGap: 40,
+        nameTextStyle: { color: "#5e675f", fontSize: 10 },
         axisLabel: {
           color: "#5e675f",
           formatter(value) {
@@ -546,7 +550,10 @@ function renderTrendChart(dailySeries, record) {
         type: "value",
         gridIndex: 1,
         name: `Daily ${pollutantLabel(record.parameter)}`,
-        nameTextStyle: { color: "#5e675f", padding: [0, 0, 8, 0] },
+        nameLocation: "middle",
+        nameRotate: 90,
+        nameGap: 40,
+        nameTextStyle: { color: "#5e675f", fontSize: 10 },
         axisLabel: {
           color: "#5e675f",
           formatter(value) {
@@ -560,41 +567,61 @@ function renderTrendChart(dailySeries, record) {
       {
         name: "Traffic Daily",
         type: "line",
+        color: "rgba(143,77,51,0.28)",
         smooth: true,
         showSymbol: false,
         xAxisIndex: 0,
         yAxisIndex: 0,
         lineStyle: { width: 1.2, color: "rgba(143,77,51,0.28)" },
+        itemStyle: { color: "rgba(143,77,51,0.28)", borderColor: "rgba(143,77,51,0.28)" },
+        emphasis: {
+          itemStyle: { color: "rgba(143,77,51,0.28)", borderColor: "rgba(143,77,51,0.28)" },
+        },
         data: trafficValues,
       },
       {
         name: "Traffic 7-day Trend",
         type: "line",
+        color: "#8f4d33",
         smooth: true,
         showSymbol: false,
         xAxisIndex: 0,
         yAxisIndex: 0,
         lineStyle: { width: 2.4, color: "#8f4d33" },
+        itemStyle: { color: "#8f4d33", borderColor: "#8f4d33" },
+        emphasis: {
+          itemStyle: { color: "#8f4d33", borderColor: "#8f4d33" },
+        },
         data: trafficTrend,
       },
       {
         name: `${pollutantLabel(record.parameter)} Daily`,
         type: "line",
+        color: "rgba(43,91,99,0.28)",
         smooth: true,
         showSymbol: false,
         xAxisIndex: 1,
         yAxisIndex: 1,
         lineStyle: { width: 1.2, color: "rgba(43,91,99,0.28)" },
+        itemStyle: { color: "rgba(43,91,99,0.28)", borderColor: "rgba(43,91,99,0.28)" },
+        emphasis: {
+          itemStyle: { color: "rgba(43,91,99,0.28)", borderColor: "rgba(43,91,99,0.28)" },
+        },
         data: pollutionValues,
       },
       {
         name: `${pollutantLabel(record.parameter)} 7-day Trend`,
         type: "line",
+        color: "#2b5b63",
         smooth: true,
         showSymbol: false,
         xAxisIndex: 1,
         yAxisIndex: 1,
         lineStyle: { width: 2.4, color: "#2b5b63" },
+        itemStyle: { color: "#2b5b63", borderColor: "#2b5b63" },
+        emphasis: {
+          itemStyle: { color: "#2b5b63", borderColor: "#2b5b63" },
+        },
         data: pollutionTrend,
       },
     ],
@@ -613,13 +640,17 @@ function renderTimeseriesChart(zoneSeries, record) {
   state.timeChart.setOption({
     animationDuration: 600,
     backgroundColor: "transparent",
-    grid: { left: 48, right: 44, top: 74, bottom: 56 },
+    grid: { left: 58, right: 48, top: 66, bottom: 56 },
     legend: {
-      top: 28,
+      top: 8,
+      left: "center",
+      itemWidth: 14,
+      itemHeight: 10,
+      itemGap: 10,
       selected: {
         [rawTrafficLabel]: false,
       },
-      textStyle: { color: "#5e675f", fontFamily: "Avenir Next, Segoe UI, sans-serif" },
+      textStyle: { color: "#5e675f", fontFamily: "Avenir Next, Segoe UI, sans-serif", fontSize: 11 },
     },
     tooltip: {
       trigger: "axis",
@@ -670,6 +701,10 @@ function renderTimeseriesChart(zoneSeries, record) {
       {
         type: "value",
         name: "Hourly Traffic",
+        nameLocation: "middle",
+        nameRotate: 90,
+        nameGap: 42,
+        nameTextStyle: { color: "#5e675f", fontSize: 10 },
         axisLabel: {
           color: "#5e675f",
           formatter(value) {
@@ -681,6 +716,10 @@ function renderTimeseriesChart(zoneSeries, record) {
       {
         type: "value",
         name: pollutantLabel(record.parameter),
+        nameLocation: "middle",
+        nameRotate: 90,
+        nameGap: 36,
+        nameTextStyle: { color: "#5e675f", fontSize: 10 },
         axisLabel: {
           color: "#5e675f",
           formatter(value) {
@@ -813,10 +852,14 @@ function renderPredictionChart(records) {
   state.predictionChart.setOption({
     animationDuration: 500,
     backgroundColor: "transparent",
-    grid: { left: 54, right: 22, top: 34, bottom: 32 },
+    grid: { left: 58, right: 22, top: 34, bottom: 32 },
     legend: {
-      top: 0,
-      textStyle: { color: "#5e675f", fontFamily: "Avenir Next, Segoe UI, sans-serif" },
+      top: 2,
+      left: "center",
+      itemWidth: 14,
+      itemHeight: 10,
+      itemGap: 12,
+      textStyle: { color: "#5e675f", fontFamily: "Avenir Next, Segoe UI, sans-serif", fontSize: 11 },
     },
     tooltip: {
       trigger: "axis",
@@ -845,6 +888,10 @@ function renderPredictionChart(records) {
       max: yMax,
       scale: true,
       name: "PM2.5 Change",
+      nameLocation: "middle",
+      nameRotate: 90,
+      nameGap: 42,
+      nameTextStyle: { color: "#5e675f", fontSize: 10 },
       axisLabel: {
         color: "#5e675f",
         formatter(value) {
@@ -888,7 +935,7 @@ function renderPredictionResidualChart(records) {
   state.predictionResidualChart.setOption({
     animationDuration: 500,
     backgroundColor: "transparent",
-    grid: { left: 68, right: 22, top: 42, bottom: 26 },
+    grid: { left: 58, right: 22, top: 30, bottom: 26 },
     tooltip: {
       trigger: "axis",
       formatter(params) {
@@ -910,12 +957,13 @@ function renderPredictionResidualChart(records) {
     yAxis: {
       type: "value",
       name: "Error",
-      nameLocation: "end",
-      nameGap: 14,
+      nameLocation: "middle",
+      nameRotate: 90,
+      nameGap: 36,
       scale: true,
       nameTextStyle: {
         color: "#5e675f",
-        padding: [0, 0, 6, 0],
+        fontSize: 10,
       },
       axisLabel: {
         color: "#5e675f",
